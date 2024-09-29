@@ -1,9 +1,8 @@
-# step 1: run Sonarqube scan
+# step 1: Sonarqube scan
 FROM sonarsource/sonar-scanner-cli AS sonarqube
 WORKDIR /usr/src/app
 COPY . .
 
-# Update this section to include SonarQube host and login details dynamically via build arguments if needed
 ARG SONAR_HOST_URL=http://localhost:9000
 ARG SONAR_LOGIN_TOKEN=squ_06a14b02bb8dc1ecb786691e0d8ee402d5c25014
 
@@ -17,13 +16,12 @@ RUN sonar-scanner \
 FROM maven:3.8.5-openjdk-17 AS builder
 WORKDIR /build
 
-# Copy only pom.xml first to leverage Docker layer caching
 COPY pom.xml .
 
-# Download dependencies first to cache them
+# download dependencies first to cache them
 RUN mvn dependency:go-offline -B
 
-# Now copy the rest of the source code and build the project
+# Now copy the rest and build
 COPY . .
 RUN ./mvnw clean package -DskipTests
 

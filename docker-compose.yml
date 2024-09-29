@@ -1,6 +1,7 @@
 services:
   mysql:
     image: mysql:8.4
+    platform: linux/amd64  # Specify the platform
     ports:
       - "3306:3306"
     environment:
@@ -13,8 +14,10 @@ services:
       - "./conf.d:/etc/mysql/conf.d:ro"
     profiles:
       - mysql
+
   postgres:
     image: postgres:16.3
+    platform: linux/amd64  # Specify the platform
     ports:
       - "5432:5432"
     environment:
@@ -23,3 +26,33 @@ services:
       - POSTGRES_DB=petclinic
     profiles:
       - postgres
+
+  jenkins:
+    build: .
+    platform: linux/amd64  # Specify the platform
+    image: jenkins-jb/main:1.0
+    container_name: jenkins-main
+    ports:
+      - '8081:8080'
+      - '50000:50000'
+    networks:
+      - jb
+
+  jenkins-slave:
+    build: ./slave
+    platform: linux/amd64  # Specify the platform
+    image: jenkins-jb/slave:1.0
+    container_name: jenkins-slave
+    restart: always
+    environment:
+      - 'JENKINS_URL=http://jenkins:8080'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./volume:/home/jenkins
+    networks:
+      - jb
+    depends_on:
+      - jenkins
+
+networks:
+  jb:
