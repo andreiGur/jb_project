@@ -1,3 +1,21 @@
+
+## Setting up Jenkins with Docker
+
+To set up Jenkins for this project, follow these steps:
+
+1. Make sure Docker is installed on your machine. If Docker is not installed, you can find the installation instructions [here](https://docs.docker.com/get-docker/).
+
+2. Run the following command to start Jenkins using Docker:
+
+   ```bash
+   docker run -d \
+     --name jenkins \
+     -p 8081:8080 \  # Maps your machine's port 8081 to Jenkins' port 8080
+     -p 50000:50000 \
+     -v jenkins_home:/var/jenkins_home \
+     jenkins/jenkins:lts
+
+
 # Spring PetClinic Sample Application [![Build Status](https://github.com/spring-projects/spring-petclinic/actions/workflows/maven-build.yml/badge.svg)](https://github.com/spring-projects/spring-petclinic/actions/workflows/maven-build.yml)
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/spring-projects/spring-petclinic) [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=7517918)
