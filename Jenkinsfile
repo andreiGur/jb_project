@@ -10,20 +10,21 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/andreiGur/jb_project.git'
-
             }
         }
         stage('SonarQube Scan') {
             steps {
                 script {
                     withSonarQubeEnv('SonarQube') {
-                        sh """
-                        sonar-scanner \
-                            -Dsonar.projectKey=spring-petclinic \
-                            -Dsonar.sources=. \
-                            -Dsonar.host.url=${SONARQUBE_HOST_URL} \
-                            -Dsonar.login=${SONARQUBE_TOKEN}
-                        """
+                        docker.image('sonarsource/sonar-scanner-cli').inside {
+                            sh """
+                            sonar-scanner \
+                                -Dsonar.projectKey=spring-petclinic \
+                                -Dsonar.sources=. \
+                                -Dsonar.host.url=${SONARQUBE_HOST_URL} \
+                                -Dsonar.login=${SONARQUBE_TOKEN}
+                            """
+                        }
                     }
                 }
             }
@@ -60,4 +61,3 @@ pipeline {
         }
     }
 }
-
