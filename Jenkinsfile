@@ -16,15 +16,13 @@ pipeline {
             steps {
                 script {
                     withSonarQubeEnv('SonarQube') {
-                        docker.image('sonarsource/sonar-scanner-cli').inside {
-                            sh """
-                            sonar-scanner \
-                                -Dsonar.projectKey=spring-petclinic \
-                                -Dsonar.sources=. \
-                                -Dsonar.host.url=${SONARQUBE_HOST_URL} \
-                                -Dsonar.login=${SONARQUBE_TOKEN}
-                            """
-                        }
+                        sh """
+                        sonar-scanner \
+                            -Dsonar.projectKey=spring-petclinic \
+                            -Dsonar.sources=. \
+                            -Dsonar.host.url=${SONARQUBE_HOST_URL} \
+                            -Dsonar.login=${SONARQUBE_TOKEN}
+                        """
                     }
                 }
             }
@@ -37,7 +35,8 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("${DOCKER_IMAGE}:${env.BUILD_NUMBER}")
+                    // Build Docker image
+                    def builtImage = docker.build("${DOCKER_IMAGE}:${env.BUILD_NUMBER}")
                 }
             }
         }
@@ -45,6 +44,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
+                        // Push Docker image
                         docker.image("${DOCKER_IMAGE}:${env.BUILD_NUMBER}").push()
                         docker.image("${DOCKER_IMAGE}:${env.BUILD_NUMBER}").push('latest')
                     }
