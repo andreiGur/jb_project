@@ -9,7 +9,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/andreiGur/jb_project.git'
+                git branch: 'main', url: 'https://github.com/andreiGur/jb_project.git'
+
             }
         }
         stage('SonarQube Scan') {
