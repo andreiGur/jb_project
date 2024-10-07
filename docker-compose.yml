@@ -55,8 +55,8 @@ services:
     image: sonarqube
     container_name: sonarqube
     environment:
-      - SONARQUBE_JDBC_USERNAME=sonar
-      - SONARQUBE_JDBC_PASSWORD=sonar
+      - SONARQUBE_JDBC_USERNAME=admin
+      - SONARQUBE_JDBC_PASSWORD=qube777
       - SONARQUBE_JDBC_URL=jdbc:postgresql://postgres:5432/sonarqube
     ports:
       - "9000:9000"
