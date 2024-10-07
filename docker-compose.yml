@@ -1,7 +1,7 @@
 services:
   mysql:
     image: mysql:8.4
-    platform: linux/amd64  # Specify the platform
+    platform: linux/amd64  
     ports:
       - "3306:3306"
     environment:
@@ -17,7 +17,7 @@ services:
 
   postgres:
     image: postgres:16.3
-    platform: linux/amd64  # Specify the platform
+    platform: linux/amd64 ֿ
     ports:
       - "5432:5432"
     environment:
