@@ -1,7 +1,7 @@
 services:
   mysql:
     image: mysql:8.4
-    platform: linux/amd64  # Specify the platform
+    platform: linux/amd64  
     ports:
       - "3306:3306"
     environment:
@@ -17,7 +17,7 @@ services:
 
   postgres:
     image: postgres:16.3
-    platform: linux/amd64  # Specify the platform
+    platform: linux/amd64 ֿ
     ports:
       - "5432:5432"
     environment:
@@ -40,18 +40,28 @@ services:
   jenkins-slave:
     build: ./jenkins/slave
     image: jenkins-jb/slave:1.0
-    # Removed container name to support scale-out option
     restart: always
     environment:
       - 'JENKINS_URL=http://jenkins:8080'
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock  # Expose the docker daemon in the container
-      - ./volume:/home/jenkins  # Avoid mysql volume mount issue
+      - /var/run/docker.sock:/var/run/docker.sock  
+      - ./volume:/home/jenkins  
     networks:
       - jb
     depends_on:
       - jenkins
 
+  sonarqube:
+    image: sonarqube
+    container_name: sonarqube
+    environment:
+      - SONARQUBE_JDBC_USERNAME=sonar
+      - SONARQUBE_JDBC_PASSWORD=sonar
+      - SONARQUBE_JDBC_URL=jdbc:postgresql://postgres:5432/sonarqube
+    ports:
+      - "9000:9000"
+    networks:
+      - jb
+
 networks:
   jb:
-
