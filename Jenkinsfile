@@ -4,7 +4,7 @@ pipeline {
         DOCKER_IMAGE = 'andreigur5001/spring-petclinic'
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
         SONARQUBE_HOST_URL = 'http://localhost:9000'
-        SONARQUBE_TOKEN = 'squ_a6b15a8030d7afabd92d82fa37f993cec73c197e'
+        SONARQUBE_TOKEN = 'squ_1d1137f0a68692b0bced72478c735d802b894e0f'
     }
     stages {
         stage('Checkout') {
