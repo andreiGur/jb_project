@@ -17,7 +17,7 @@ services:
 
   postgres:
     image: postgres:16.3
-    platform: linux/amd64 ֿ
+    platform: linux/amd64
     ports:
       - "5432:5432"
     environment:
@@ -38,7 +38,7 @@ services:
       - jb
 
   jenkins-slave:
-    build: ./jenkins/slave
+    build: ./jenkins/slave  # Ensure this path exists with a Dockerfile inside
     image: jenkins-jb/slave:1.0
     restart: always
     environment:
@@ -48,8 +48,8 @@ services:
       - ./volume:/home/jenkins  
     networks:
       - jb
-  depends_on:
-    - jenkins
+    depends_on:
+      - jenkins
 
   sonarqube:
     image: sonarqube
