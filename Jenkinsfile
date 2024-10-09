@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'andreigur5001/spring-petclinic'
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
-        SONARQUBE_HOST_URL = 'http://sonarqube:9000'
+        SONARQUBE_HOST_URL = 'http://localhost:9000'
         SONARQUBE_TOKEN = 'squ_9196e2e209ecb371e7f403e34e34b1a89f3d1fb1'
     }
     stages {
