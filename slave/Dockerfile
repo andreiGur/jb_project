@@ -6,10 +6,14 @@ RUN pip install jenkins-webapi
 # Create necessary directories
 RUN mkdir -p /home/jenkins && mkdir -p /var/lib/jenkins
 
+# Install Java 17
+RUN apt-get update && apt-get install -y openjdk-17-jdk
+
 # Install SonarScanner CLI
 RUN curl -o /opt/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip \
     && unzip /opt/sonar-scanner.zip -d /opt/ \
-    && ln -s /opt/sonar-scanner-4.6.2.2472-linux/bin/sonar-scanner /usr/local/bin/sonar-scanner
+    && ln -s /opt/sonar-scanner-4.6.2.2472-linux/bin/sonar-scanner /usr/local/bin/sonar-scanner \
+    && rm /opt/sonar-scanner.zip
 
 # Start-up script to attach the slave to the master
 ADD slave.py /var/lib/jenkins/slave.py
