@@ -4,11 +4,7 @@ pipeline {
         DOCKER_IMAGE = 'andreigur5001/spring-petclinic'
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
         SONARQUBE_HOST_URL = 'http://localhost:9000'
-<<<<<<< HEAD
-        SONARQUBE_TOKEN = 'squ_5d2de5cc677c6ce69e3e137e5346772a02883582'
-=======
-        SONARQUBE_TOKEN = 'sqa_7c407fba76ba23730d920d0cac9e513abc85226a'
->>>>>>> 5da634f (Added Helm Chart and updated project files)
+        SONARQUBE_TOKEN = 'squ_5d2de5cc677c6ce69e3e137e5346772a02883582' 
     }
     stages {
         stage('Checkout') {
