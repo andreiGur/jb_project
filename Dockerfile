@@ -18,10 +18,10 @@ WORKDIR /build
 
 COPY pom.xml .
 
-# download dependencies first to cache them
+# download dependencies first to cache
 RUN mvn dependency:go-offline -B
 
-# Now copy the rest and build
+# now copy the rest and build
 COPY . .
 RUN ./mvnw clean package -DskipTests
 
@@ -29,8 +29,8 @@ RUN ./mvnw clean package -DskipTests
 FROM openjdk:17-jdk-slim
 WORKDIR /code
 
-# Copy the generated JAR from the builder stage
+# copy the generated JAR from the builder stage
 COPY --from=builder /build/target/spring-petclinic-3.3.0-SNAPSHOT.jar /code/
 
-# Run the Spring Boot application
+# run application
 CMD ["java", "-jar", "/code/spring-petclinic-3.3.0-SNAPSHOT.jar"]
