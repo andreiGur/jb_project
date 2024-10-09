@@ -1,0 +1,9 @@
+image:
+  repository: andreigur5001/spring-petclinic
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8080
+
